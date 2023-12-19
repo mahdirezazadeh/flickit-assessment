@@ -2,6 +2,7 @@ package org.flickit.assessment.core.application.service.subject;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.flickit.assessment.common.exception.ResourceNotFoundException;
 import org.flickit.assessment.core.application.domain.MaturityScore;
 import org.flickit.assessment.core.application.domain.QualityAttributeValue;
 import org.flickit.assessment.core.application.domain.SubjectValue;
@@ -10,7 +11,6 @@ import org.flickit.assessment.core.application.domain.report.SubjectReport.Attri
 import org.flickit.assessment.core.application.domain.report.TopAttributeResolver;
 import org.flickit.assessment.core.application.port.in.subject.ReportSubjectUseCase;
 import org.flickit.assessment.core.application.port.out.subject.LoadSubjectReportInfoPort;
-import org.flickit.assessment.core.application.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,7 +45,7 @@ public class ReportSubjectService implements ReportSubjectUseCase {
 
         var attributeValues = subjectValue.getQualityAttributeValues();
 
-        var subjectReportItem = buildSubject(subjectValue, assessmentResult.isCalculateValid());
+        var subjectReportItem = buildSubject(subjectValue, assessmentResult.isCalculateValid(), assessmentResult.isConfidenceValid());
         var attributeReportItems = buildAttributes(attributeValues);
 
         var midLevelMaturity = middleLevel(maturityLevels);
@@ -60,11 +60,13 @@ public class ReportSubjectService implements ReportSubjectUseCase {
             attributeReportItems);
     }
 
-    private SubjectReport.SubjectReportItem buildSubject(SubjectValue subjectValue, boolean isCalculateValid) {
+    private SubjectReport.SubjectReportItem buildSubject(SubjectValue subjectValue, boolean isCalculateValid, boolean isConfidenceValid) {
         return new SubjectReport.SubjectReportItem(
             subjectValue.getSubject().getId(),
             subjectValue.getMaturityLevel().getId(),
-            isCalculateValid
+            subjectValue.getConfidenceValue(),
+            isCalculateValid,
+            isConfidenceValid
         );
     }
 
@@ -75,7 +77,8 @@ public class ReportSubjectService implements ReportSubjectUseCase {
                 x.getMaturityLevel().getId(),
                 x.getMaturityScores().stream()
                     .sorted(Comparator.comparingLong(MaturityScore::getMaturityLevelId))
-                    .collect(toCollection(LinkedHashSet::new))
+                    .collect(toCollection(LinkedHashSet::new)),
+                x.getConfidenceValue()
             ))
             .toList();
     }

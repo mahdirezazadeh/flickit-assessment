@@ -1,9 +1,9 @@
 package org.flickit.assessment.core.application.service.evidence;
 
+import org.flickit.assessment.common.exception.ResourceNotFoundException;
 import org.flickit.assessment.core.application.port.in.evidence.AddEvidenceUseCase;
 import org.flickit.assessment.core.application.port.out.assessment.CheckAssessmentExistencePort;
 import org.flickit.assessment.core.application.port.out.evidence.CreateEvidencePort;
-import org.flickit.assessment.core.application.exception.ResourceNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -33,7 +33,7 @@ class AddEvidenceServiceTest {
     void testAddEvidence_ValidParam_PersistsAndReturnsId() {
         AddEvidenceUseCase.Param param = new AddEvidenceUseCase.Param(
             "desc",
-            1L,
+            UUID.randomUUID(),
             UUID.randomUUID(),
             1L
         );
@@ -60,7 +60,7 @@ class AddEvidenceServiceTest {
     void testAddEvidence_InvalidAssessmentId_ThrowNotFoundException() {
         AddEvidenceUseCase.Param param = new AddEvidenceUseCase.Param(
             "desc",
-            1L,
+            UUID.randomUUID(),
             UUID.randomUUID(),
             1L
         );

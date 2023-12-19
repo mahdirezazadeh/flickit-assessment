@@ -2,15 +2,15 @@ package org.flickit.assessment.core.adapter.out.persistence.assessment;
 
 import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
+import org.flickit.assessment.common.application.domain.crud.PaginatedResponse;
+import org.flickit.assessment.common.exception.ResourceNotFoundException;
 import org.flickit.assessment.core.application.domain.Assessment;
-import org.flickit.assessment.core.application.domain.crud.PaginatedResponse;
-import org.flickit.assessment.core.application.exception.ResourceNotFoundException;
 import org.flickit.assessment.core.application.port.in.assessment.GetAssessmentListUseCase.AssessmentListItem;
 import org.flickit.assessment.core.application.port.out.assessment.*;
-import org.flickit.assessment.data.jpa.answer.AnswerJpaRepository;
-import org.flickit.assessment.data.jpa.assessment.AssessmentJpaEntity;
-import org.flickit.assessment.data.jpa.assessment.AssessmentJpaRepository;
-import org.flickit.assessment.data.jpa.assessmentresult.AssessmentResultJpaRepository;
+import org.flickit.assessment.data.jpa.core.answer.AnswerJpaRepository;
+import org.flickit.assessment.data.jpa.core.assessment.AssessmentJpaEntity;
+import org.flickit.assessment.data.jpa.core.assessment.AssessmentJpaRepository;
+import org.flickit.assessment.data.jpa.core.assessmentresult.AssessmentResultJpaRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
@@ -22,8 +22,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static org.flickit.assessment.core.common.ErrorMessageKey.GET_ASSESSMENT_PROGRESS_ASSESSMENT_RESULT_NOT_FOUND;
-import static org.flickit.assessment.data.jpa.assessment.AssessmentJpaEntity.Fields.ASSESSMENT_KIT_ID;
-import static org.flickit.assessment.data.jpa.assessment.AssessmentJpaEntity.Fields.SPACE_ID;
+import static org.flickit.assessment.data.jpa.core.assessment.AssessmentJpaEntity.Fields.ASSESSMENT_KIT_ID;
+import static org.flickit.assessment.data.jpa.core.assessment.AssessmentJpaEntity.Fields.SPACE_ID;
 import static org.springframework.data.jpa.domain.Specification.where;
 
 @Component

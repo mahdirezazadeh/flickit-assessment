@@ -5,8 +5,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
-import org.flickit.assessment.core.application.exception.ResourceNotFoundException;
-import org.flickit.assessment.core.common.SelfValidating;
+import org.flickit.assessment.common.application.SelfValidating;
+import org.flickit.assessment.common.exception.ResourceNotFoundException;
 
 import java.util.UUID;
 
@@ -29,7 +29,7 @@ public interface AddEvidenceUseCase {
         String description;
 
         @NotNull(message = ADD_EVIDENCE_CREATED_BY_ID_NOT_NULL)
-        Long createdById;
+        UUID createdById;
 
         @NotNull(message = ADD_EVIDENCE_ASSESSMENT_ID_NOT_NULL)
         UUID assessmentId;
@@ -37,7 +37,7 @@ public interface AddEvidenceUseCase {
         @NotNull(message = ADD_EVIDENCE_QUESTION_ID_NOT_NULL)
         Long questionId;
 
-        public Param(String description, Long createdById, UUID assessmentId, Long questionId) {
+        public Param(String description, UUID createdById, UUID assessmentId, Long questionId) {
             this.description = description;
             this.createdById = createdById;
             this.assessmentId = assessmentId;

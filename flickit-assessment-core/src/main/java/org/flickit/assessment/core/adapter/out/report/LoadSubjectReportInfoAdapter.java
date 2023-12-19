@@ -2,16 +2,17 @@ package org.flickit.assessment.core.adapter.out.report;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.flickit.assessment.common.exception.ResourceNotFoundException;
 import org.flickit.assessment.core.adapter.out.persistence.qualityattributevalue.QualityAttributeValuePersistenceJpaAdapter;
 import org.flickit.assessment.core.adapter.out.rest.maturitylevel.MaturityLevelRestAdapter;
 import org.flickit.assessment.core.adapter.out.rest.subject.SubjectRestAdapter;
 import org.flickit.assessment.core.application.domain.*;
 import org.flickit.assessment.core.application.exception.CalculateNotValidException;
-import org.flickit.assessment.core.application.exception.ResourceNotFoundException;
+import org.flickit.assessment.core.application.exception.ConfidenceCalculationNotValidException;
 import org.flickit.assessment.core.application.port.out.subject.LoadSubjectReportInfoPort;
-import org.flickit.assessment.data.jpa.assessment.AssessmentJpaEntity;
-import org.flickit.assessment.data.jpa.assessmentresult.AssessmentResultJpaRepository;
-import org.flickit.assessment.data.jpa.subjectvalue.SubjectValueJpaRepository;
+import org.flickit.assessment.data.jpa.core.assessment.AssessmentJpaEntity;
+import org.flickit.assessment.data.jpa.core.assessmentresult.AssessmentResultJpaRepository;
+import org.flickit.assessment.data.jpa.core.subjectvalue.SubjectValueJpaRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -48,6 +49,11 @@ public class LoadSubjectReportInfoAdapter implements LoadSubjectReportInfoPort {
         if (!Boolean.TRUE.equals(assessmentResultEntity.getIsCalculateValid())) {
             log.warn("The calculated result is not valid for [assessmentId={}, resultId={}].", assessmentId, assessmentResultId);
             throw new CalculateNotValidException(REPORT_SUBJECT_ASSESSMENT_RESULT_NOT_VALID);
+        }
+
+        if (!Boolean.TRUE.equals(assessmentResultEntity.getIsConfidenceValid())) {
+            log.warn("The calculated confidence value is not valid for [assessmentId={}, resultId={}].", assessmentId, assessmentResultId);
+            throw new ConfidenceCalculationNotValidException(REPORT_SUBJECT_ASSESSMENT_RESULT_NOT_VALID);
         }
 
         var svEntity = subjectValueRepo.findBySubjectIdAndAssessmentResult_Id(subjectId, assessmentResultId)

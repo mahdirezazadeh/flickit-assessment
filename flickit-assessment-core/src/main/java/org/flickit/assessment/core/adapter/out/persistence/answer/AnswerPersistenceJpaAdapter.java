@@ -1,17 +1,17 @@
 package org.flickit.assessment.core.adapter.out.persistence.answer;
 
 import lombok.RequiredArgsConstructor;
+import org.flickit.assessment.common.application.domain.crud.PaginatedResponse;
+import org.flickit.assessment.common.exception.ResourceNotFoundException;
 import org.flickit.assessment.core.application.domain.Answer;
-import org.flickit.assessment.core.application.domain.crud.PaginatedResponse;
-import org.flickit.assessment.core.application.exception.ResourceNotFoundException;
 import org.flickit.assessment.core.application.port.in.answer.GetAnswerListUseCase.AnswerListItem;
 import org.flickit.assessment.core.application.port.in.questionnaire.GetQuestionnairesProgressUseCase.QuestionnaireProgress;
 import org.flickit.assessment.core.application.port.out.answer.*;
 import org.flickit.assessment.core.application.port.out.questionnaire.GetQuestionnairesProgressPort;
-import org.flickit.assessment.data.jpa.answer.AnswerJpaEntity;
-import org.flickit.assessment.data.jpa.answer.AnswerJpaRepository;
-import org.flickit.assessment.data.jpa.assessmentresult.AssessmentResultJpaEntity;
-import org.flickit.assessment.data.jpa.assessmentresult.AssessmentResultJpaRepository;
+import org.flickit.assessment.data.jpa.core.answer.AnswerJpaEntity;
+import org.flickit.assessment.data.jpa.core.answer.AnswerJpaRepository;
+import org.flickit.assessment.data.jpa.core.assessmentresult.AssessmentResultJpaEntity;
+import org.flickit.assessment.data.jpa.core.assessmentresult.AssessmentResultJpaRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
@@ -21,7 +21,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static org.flickit.assessment.core.common.ErrorMessageKey.*;
-
 
 @Component
 @RequiredArgsConstructor

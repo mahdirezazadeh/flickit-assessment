@@ -1,12 +1,12 @@
 package org.flickit.assessment.core.adapter.out.persistence.subjectvalue;
 
 import lombok.RequiredArgsConstructor;
-import org.flickit.assessment.core.application.exception.ResourceNotFoundException;
+import org.flickit.assessment.common.exception.ResourceNotFoundException;
 import org.flickit.assessment.core.application.port.out.subjectvalue.CreateSubjectValuePort;
-import org.flickit.assessment.data.jpa.assessmentresult.AssessmentResultJpaEntity;
-import org.flickit.assessment.data.jpa.assessmentresult.AssessmentResultJpaRepository;
-import org.flickit.assessment.data.jpa.subjectvalue.SubjectValueJpaEntity;
-import org.flickit.assessment.data.jpa.subjectvalue.SubjectValueJpaRepository;
+import org.flickit.assessment.data.jpa.core.assessmentresult.AssessmentResultJpaEntity;
+import org.flickit.assessment.data.jpa.core.assessmentresult.AssessmentResultJpaRepository;
+import org.flickit.assessment.data.jpa.core.subjectvalue.SubjectValueJpaEntity;
+import org.flickit.assessment.data.jpa.core.subjectvalue.SubjectValueJpaRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

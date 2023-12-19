@@ -1,23 +1,23 @@
 package org.flickit.assessment.core.adapter.out.calculate;
 
 import lombok.AllArgsConstructor;
+import org.flickit.assessment.common.exception.ResourceNotFoundException;
 import org.flickit.assessment.core.adapter.out.rest.qualityattribute.QualityAttributeDto;
 import org.flickit.assessment.core.adapter.out.rest.question.QuestionDto;
 import org.flickit.assessment.core.adapter.out.rest.question.QuestionRestAdapter;
 import org.flickit.assessment.core.adapter.out.rest.subject.SubjectDto;
 import org.flickit.assessment.core.adapter.out.rest.subject.SubjectRestAdapter;
 import org.flickit.assessment.core.application.domain.*;
-import org.flickit.assessment.core.application.exception.ResourceNotFoundException;
 import org.flickit.assessment.core.application.port.out.assessmentresult.LoadConfidenceLevelCalculateInfoPort;
-import org.flickit.assessment.data.jpa.answer.AnswerJpaEntity;
-import org.flickit.assessment.data.jpa.answer.AnswerJpaRepository;
-import org.flickit.assessment.data.jpa.assessment.AssessmentJpaEntity;
-import org.flickit.assessment.data.jpa.assessmentresult.AssessmentResultJpaEntity;
-import org.flickit.assessment.data.jpa.assessmentresult.AssessmentResultJpaRepository;
-import org.flickit.assessment.data.jpa.attributevalue.QualityAttributeValueJpaEntity;
-import org.flickit.assessment.data.jpa.attributevalue.QualityAttributeValueJpaRepository;
-import org.flickit.assessment.data.jpa.subjectvalue.SubjectValueJpaEntity;
-import org.flickit.assessment.data.jpa.subjectvalue.SubjectValueJpaRepository;
+import org.flickit.assessment.data.jpa.core.answer.AnswerJpaEntity;
+import org.flickit.assessment.data.jpa.core.answer.AnswerJpaRepository;
+import org.flickit.assessment.data.jpa.core.assessment.AssessmentJpaEntity;
+import org.flickit.assessment.data.jpa.core.assessmentresult.AssessmentResultJpaEntity;
+import org.flickit.assessment.data.jpa.core.assessmentresult.AssessmentResultJpaRepository;
+import org.flickit.assessment.data.jpa.core.attributevalue.QualityAttributeValueJpaEntity;
+import org.flickit.assessment.data.jpa.core.attributevalue.QualityAttributeValueJpaRepository;
+import org.flickit.assessment.data.jpa.core.subjectvalue.SubjectValueJpaEntity;
+import org.flickit.assessment.data.jpa.core.subjectvalue.SubjectValueJpaRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -146,7 +146,10 @@ public class ConfidenceLevelCalculateInfoLoadAdapter implements LoadConfidenceLe
         return context.allAnswerEntities.stream()
             .filter(a -> impactfulQuestionIds.contains(a.getQuestionId()))
             .map(entity -> {
-                AnswerOption answerOption = new AnswerOption(entity.getAnswerOptionId(), entity.getQuestionId(), null);
+                AnswerOption answerOption = null;
+                if (entity.getAnswerOptionId() != null) {
+                    answerOption = new AnswerOption(entity.getAnswerOptionId(), entity.getQuestionId(), null);
+                }
                 return new Answer(
                     entity.getId(),
                     answerOption,

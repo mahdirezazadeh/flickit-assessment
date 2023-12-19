@@ -5,9 +5,9 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
+import org.flickit.assessment.common.application.SelfValidating;
+import org.flickit.assessment.common.application.domain.crud.PaginatedResponse;
 import org.flickit.assessment.core.application.domain.AssessmentColor;
-import org.flickit.assessment.core.common.SelfValidating;
-import org.flickit.assessment.core.application.domain.crud.PaginatedResponse;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -52,7 +52,8 @@ public interface GetAssessmentListUseCase {
         AssessmentColor color,
         LocalDateTime lastModificationTime,
         Long maturityLevelId,
-        boolean isCalculateValid
+        boolean isCalculateValid,
+        boolean isConfidenceValid
     ) {
     }
 }
