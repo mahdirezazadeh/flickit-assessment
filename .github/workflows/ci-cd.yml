@@ -222,8 +222,9 @@ jobs:
       - uses: actions/checkout@v3
       - uses: ncipollo/release-action@v1
         with:
-          tag: v1${{ needs.build.outputs.project_version }}
-          name: v1${{ needs.build.outputs.project_version }}
+          tag: v2${{ needs.build.outputs.project_version }}
+          name: v2${{ needs.build.outputs.project_version }}
+          makeLatest: true
 
   build-and-push-image:
     needs: [tag-and-release]
