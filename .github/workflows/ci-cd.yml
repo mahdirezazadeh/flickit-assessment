@@ -200,7 +200,7 @@ jobs:
     needs: [build]
     name: tag and release
     runs-on: ubuntu-latest
-    if: ${{ contains( needs.build.outputs.project_version , 'SNAP-SHOT') }}
+    if: ${{ contains( needs.build.outputs.project_version , 'SNAPSHOT') }}
 #    (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
 #      github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true &&
 #       contains( ${{ needs.build.outputs.project_version }} , 'SNAP-SHOT') }}
